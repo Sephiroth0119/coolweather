@@ -1,6 +1,7 @@
 package com.example.sephiroth.coolweather;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.sephiroth.coolweather.gson.Forecast;
 import com.example.sephiroth.coolweather.gson.Weather;
+import com.example.sephiroth.coolweather.service.AutoUpdateService;
 import com.example.sephiroth.coolweather.util.HttpUtil;
 import com.example.sephiroth.coolweather.util.Utility;
 
@@ -141,6 +143,7 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.putString("weather", responseText);
                             editor.apply();
                             showWeatherInfo(weather);
+
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
@@ -199,6 +202,8 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 /*加载必应的图片*/
     private void loadBingPic(){
